@@ -11,9 +11,11 @@ class TestFormTags(test.TestCase):
     def setUp(self):
         self.form = TestForm()
         self.valid_data = dict(foo='foo', bar='bar', baz='baz')
-        self.invalid_data = dict(foo='foo', bar='bar', baz='')
+        self.invalid_data = dict(foo='', bar='bar', baz='baz')
         self.valid_form = TestForm(self.valid_data)
+        self.valid_form.full_clean()
         self.invalid_form = TestForm(self.invalid_data)
+        self.invalid_form.full_clean()
 
     def render(self, tpl, **context):
         tpl = Template('{%% load formtags %%}%s' % tpl)
@@ -104,6 +106,11 @@ class TestFormTags(test.TestCase):
         label = 'asdf&'
         expected = '<label for="id_foo">asdf&</label>'
         self.assertRenderEqual(expected, tpl, label=label)
+
+    def test_blabel_with_invalid_form(self):
+        tpl = '{{ invalid.foo|blabel }}'
+        expected = '<label for="id_foo" class="error">Foo</label>'
+        self.assertRenderEqual(expected, tpl)
 
     def test_bclass(self):
         tpl = '{{ form.foo|bclass:"asdf" }}'
