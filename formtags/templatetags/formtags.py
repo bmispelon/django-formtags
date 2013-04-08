@@ -96,7 +96,10 @@ class BField(object):
     def render_label(self):
         """Render a label tag corresponding to the field with a custom text."""
         if self.label is None or self.label is _USE_FIELD_DATA:
-            label = None  # field.label_tag(None) uses the field's label
+            # Workaround for bug #20211.
+            # Normally, we'd just pass label=None so that label_tag would use
+            # the field's label.
+            label = mark_safe(escape(self.field.label))
         else:
             label = mark_safe(self.label)
         attrs = None if not self.field.errors else\

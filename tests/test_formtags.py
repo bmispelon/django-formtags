@@ -1,6 +1,7 @@
 from django import test
 from django.template import Template, Context
 from django.utils.html import escape
+from django.utils.translation import ugettext_lazy
 
 from formtags.utils import split_fields
 
@@ -110,6 +111,12 @@ class TestFormTags(test.TestCase):
     def test_blabel_with_invalid_form(self):
         tpl = '{{ invalid.foo|blabel }}'
         expected = '<label for="id_foo" class="error">Foo</label>'
+        self.assertRenderEqual(expected, tpl)
+
+    def test_blabel_workaround_20211(self):
+        tpl = '{{ form.foo|blabel }}'
+        self.form.fields['foo'].label = ugettext_lazy('asdf&')
+        expected = '<label for="id_foo">asdf&amp;</label>'
         self.assertRenderEqual(expected, tpl)
 
     def test_bclass(self):

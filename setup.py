@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="django-formtags",
-    version="0.1.1",
+    version="0.1.2",
     description="Customize form fields directly from templates",
     keywords="django, forms, tags",
     author="Baptiste Mispelon",
