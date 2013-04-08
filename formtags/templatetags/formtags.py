@@ -6,11 +6,10 @@ from __future__ import unicode_literals, absolute_import
 from functools import wraps
 
 from django import template
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.html import conditional_escape, escape
 from django.utils.safestring import mark_safe
 
-from formtags.utils import split_fields
+from formtags.utils import split_fields, python_2_unicode_compatible
 
 
 _USE_FIELD_DATA = object()
