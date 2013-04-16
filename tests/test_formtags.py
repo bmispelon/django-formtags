@@ -12,7 +12,7 @@ class TestFormTags(test.TestCase):
     def setUp(self):
         self.form = TestForm()
         self.valid_data = dict(foo='foo', bar='bar', baz='baz')
-        self.invalid_data = dict(foo='', bar='bar', baz='baz')
+        self.invalid_data = dict(foo='invalid', bar='bar', baz='baz')
         self.valid_form = TestForm(self.valid_data)
         self.valid_form.full_clean()
         self.invalid_form = TestForm(self.invalid_data)
