@@ -49,7 +49,7 @@ Once that's done, you can run the tests with:
 
 .. code-block:: bash
 
-    py.test --cov=multiform --cov-report=html tests/
+    py.test --cov=formtags --cov-report=html tests/
 
 
 Building the documentation
