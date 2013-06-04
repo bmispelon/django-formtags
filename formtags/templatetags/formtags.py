@@ -26,6 +26,7 @@ class BField(object):
         '</div>'
     )
     label_error_class = 'error'
+    label_required_class = 'required'
     helptext_tpl = '<span class="helptext">{0}</span>'
     br_tag = '<br />'
 
@@ -102,8 +103,10 @@ class BField(object):
             label = mark_safe(escape(self.field.label))
         else:
             label = mark_safe(self.label)
-        attrs = None if not self.field.errors else\
-                {'class': self.label_error_class}
+        klasses = {self.label_error_class: self.field.errors,
+                   self.label_required_class: self.field.field.required}
+        attrs = {'class': ' '.join(key for key in klasses if klasses[key])}
+        attrs = None if not attrs['class'] else attrs
         return self.field.label_tag(contents=label, attrs=attrs)
 
     def render_field(self):

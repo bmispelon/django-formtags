@@ -113,6 +113,16 @@ class TestFormTags(test.TestCase):
         expected = '<label for="id_foo" class="error">Foo</label>'
         self.assertRenderEqual(expected, tpl)
 
+    def test_blabel_with_required_form(self):
+        tpl = '{{ form.qux|blabel }}'
+        expected = '<label for="id_qux" class="required">Qux</label>'
+        self.assertRenderEqual(expected, tpl)
+
+    def test_blabel_with_required_invalid_form(self):
+        tpl = '{{ invalid.qux|blabel }}'
+        expected = '<label for="id_qux" class="error required">Qux</label>'
+        self.assertRenderEqual(expected, tpl)
+
     def test_blabel_workaround_20211(self):
         tpl = '{{ form.foo|blabel }}'
         self.form.fields['foo'].label = ugettext_lazy('asdf&')
@@ -173,6 +183,10 @@ class TestFormTags(test.TestCase):
                 <input type="text" name="baz" id="id_baz" />
                 <span class="helptext">&lt;baz&gt;</span>
             </div>
+            <div class="fieldWrapper">
+                <label class="required" for="id_qux">Qux</label> :
+                <input type="text" name="qux" id="id_qux" />
+            </div>
         '''
         self.assertRenderEqual(expected, tpl)
 
@@ -213,7 +227,7 @@ class TestFormTags(test.TestCase):
         self.assertRenderEqual(expected, tpl)
 
     def test_bexclude(self):
-        tpl = '{{ form|bexclude:"baz"|bform }}'
+        tpl = '{{ form|bexclude:"baz,qux"|bform }}'
         expected = '''
             <div class="fieldWrapper">
                 <label for="id_foo">Foo</label> :
