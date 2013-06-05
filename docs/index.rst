@@ -144,8 +144,8 @@ bfilter
 Selects a sub-set of the fields of a given form.
 
 The list of fields can be given in two ways:
-    * A string containing the names of the fields to include, separated either
-      by commas or spaces.
+    * A string containing the names of the fields to include, separated
+      by commas (without spaces for Django < 1.6).
 
     * An iterable (e.g. a ``list``) of the names of the fields to include.
 
@@ -153,7 +153,7 @@ The list of fields can be given in two ways:
 
     {% load formtags %}
 
-    {% for field in form|bfilter:'username, email' %}
+    {% for field in form|bfilter:'username,email' %}
         {{ field|bwrap }}
     {% endfor %}
 
@@ -176,7 +176,7 @@ This can also be achieved by combining the ``bfilter`` with the ``bform`` one:
 
     {% load formtags %}
 
-    {{ form|bfilter:'username, email'|bform }}
+    {{ form|bfilter:'username,email'|bform }}
 
 bexclude
 --------
