@@ -149,7 +149,7 @@ def bwrap(field, break_after_label=False):
 
 def blabel(field, label=_USE_FIELD_DATA):
     """Change the label of the given field."""
-    print label, repr(label), type(label)
+    #print label, repr(label), type(label)
     return BField.factory(field, label=label)
 
 
